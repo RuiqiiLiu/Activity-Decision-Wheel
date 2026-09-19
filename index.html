@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Decide For Me</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <nav class="topbar" aria-label="Brand">
+      <span class="brand"><span class="brand-icon" aria-hidden="true">✳</span> LITTLE DECISIONS</span>
+      <span class="top-note">Less overthinking. More living.</span>
+    </nav>
+    <header>
+      <div class="eyebrow"><span aria-hidden="true">✦</span> A gift from chance</div>
+      <h1>Decide <em>for</em> me.</h1>
+      <p>Put the little things on the wheel. Then let chance carry the mental load for a minute.</p>
+    </header>
+    <main>
+      <section class="panel" aria-labelledby="options-title">
+        <div class="section-label">THE POSSIBILITIES</div>
+        <h2 id="options-title">What’s on your mind?</h2>
+        <p class="hint">Give your thoughts a place to land. Add at least two options.</p>
+        <div class="options" id="options" aria-live="polite"></div>
+        <button class="add" id="addOption" type="button"><span>+</span> Add another option</button>
+        <div class="panel-footer"><span id="choiceCount">5 options</span><span>Equal chance for every option</span></div>
+      </section>
+      <section class="wheel-side" aria-label="Decision wheel">
+        <div class="section-label wheel-caption">LET IT SPIN</div>
+        <div class="wheel-wrap">
+          <div class="pointer" aria-hidden="true"></div>
+          <div class="wheel" id="wheel" role="img" aria-label="Your decision wheel"></div>
+        </div>
+        <button class="spin" id="spin" type="button">Spin the wheel</button>
+        <div class="result-card"><p class="result" id="result" aria-live="polite">Ready when you are.</p></div>
+      </section>
+    </main>
+    <footer class="page-footer">For the small stuff. The final say is always yours. <span aria-hidden="true">✦</span></footer>
+  </div>
+  <script src="script.js" defer></script>
+</body>
+</html>
