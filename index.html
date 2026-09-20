@@ -21,10 +21,12 @@
       <section class="panel" aria-labelledby="options-title">
         <div class="section-label">THE POSSIBILITIES</div>
         <h2 id="options-title">What’s on your mind?</h2>
-        <p class="hint">Give your thoughts a place to land. Add at least two options.</p>
+        <p class="hint">Give your thoughts a place to land. Add your first option to begin.</p>
+        <div class="option-tools"><label><input id="customOdds" type="checkbox"> Custom percentages</label><button id="clearOptions" type="button" class="clear">Clear all</button></div>
+        <p id="oddsHelp" class="odds-help" hidden>Set any option’s percentage. Leave others on Auto to share the remaining chance.</p>
         <div class="options" id="options" aria-live="polite"></div>
-        <button class="add" id="addOption" type="button"><span>+</span> Add another option</button>
-        <div class="panel-footer"><span id="choiceCount">5 options</span><span>Equal chance for every option</span></div>
+        <button class="add" id="addOption" type="button"><span>+</span> Add </button>
+        <div class="panel-footer"><span id="choiceCount">0 options</span><span id="oddsStatus" aria-live="polite">Equal chance for every option</span></div>
       </section>
       <section class="wheel-side" aria-label="Decision wheel">
         <div class="section-label wheel-caption">LET IT SPIN</div>

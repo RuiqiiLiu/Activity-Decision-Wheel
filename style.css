@@ -38,6 +38,17 @@
     @media (max-width:760px) { main { grid-template-columns:1fr; } .wheel-side { grid-row:1; } .wheel-wrap { width:min(100%, 420px); } .options { max-height:250px; } }
 
 /* Refreshed visual theme */
+.option-tools { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:16px; font-size:.8rem; }
+.option-tools label { display:flex; align-items:center; gap:7px; }
+.option-tools input { accent-color:var(--ink); }
+.clear { border:0; background:none; color:var(--coral); font:inherit; cursor:pointer; padding:8px 0 8px 8px; }
+.odds-help { font-size:.75rem; line-height:1.5; color:var(--muted); margin:0 0 14px; }
+.custom-odds .option-row { grid-template-columns:18px minmax(0,1fr) 82px 28px; }
+.percentage-wrap { display:flex; align-items:center; font-size:.7rem; color:var(--muted); }
+.percentage-wrap[hidden] { display:none; }
+.percentage { width:65px; padding:10px 3px; font-size:.78rem; }
+.invalid { color:#b74330; }
+.wheel.is-empty::after { display:none; }
 :root { --ink:#253c35; --muted:#6c7c73; --coral:#d85a41; }
 body { background:radial-gradient(ellipse at 90% 45%, #e7eddc 0, transparent 53%), #f7f6ee; }
 .app { width:min(1140px, calc(100% - 48px)); padding:25px 0 24px; }
@@ -94,4 +105,3 @@ button:disabled { cursor:default; opacity:.5; }
   .panel { padding:23px; }
   .page-footer { margin-top:28px; }
 }
-
