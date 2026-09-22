@@ -81,7 +81,7 @@ input:focus { box-shadow:none; }
 .wheel-wrap::before { content:""; position:absolute; inset:0; border:1px dashed #acbba0; border-radius:50%; }
 .wheel { width:91%; height:91%; border-width:8px; box-shadow:0 6px 0 #c9d0bb, 0 15px 30px #253c351a; }
 .wheel::after { inset:calc(50% - 23px); background:#fffdf8; border:7px solid var(--ink); box-shadow:0 0 0 5px #ffffff55; }
-.wheel text { font-size:12px; font-weight:750; }
+.wheel text { font-size:17px; font-weight:750; }
 .pointer { top:-5px; border-left-width:16px; border-right-width:16px; border-top-width:32px; border-top-color:var(--ink); }
 .pointer::after { top:-27px; width:9px; height:9px; left:-4.5px; }
 .spin { background:var(--ink); width:min(100%, 270px); min-height:50px; margin-top:23px; border-radius:12px; font-size:.95rem; box-shadow:0 4px 0 #122a21, 0 8px 16px #253c3515; }

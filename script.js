@@ -107,6 +107,58 @@ function renderOptions() {
   optionsEl.classList.toggle('custom-odds', customOdds.checked);
 }
 
+// Measure actual rendered SVG text, then wrap within each slice's available space.
+function wrapWheelLabel(label, text, size, x, y) {
+  const ns = 'http://www.w3.org/2000/svg';
+  const probe = document.createElementNS(ns, 'tspan');
+  label.append(probe);
+  const measure = value => { probe.textContent = value; return probe.getComputedTextLength(); };
+  const characters = Array.from(text.replace(/\s+/gu, ' ').trim());
+  const lineHeight = 21;
+  let chosen = [];
+  for (let count = 1; count <= 5; count++) {
+    let remaining = [...characters];
+    const lines = [];
+    for (let line = 0; line < count && remaining.length; line++) {
+      const offset = (line - (count - 1) / 2) * lineHeight;
+      const radius = 126 - offset;
+      const near = radius - 10;
+      const far = radius + 10;
+      const circleWidth = Math.sqrt(Math.max(0, 188 * 188 - far * far));
+      const wedgeWidth = size >= 180 ? Infinity : near * Math.tan(size * Math.PI / 360);
+      const width = Math.max(0, 2 * Math.min(circleWidth, wedgeWidth) - 12);
+      let length = 0;
+      while (length < remaining.length && measure(remaining.slice(0, length + 1).join('')) <= width) length++;
+      const last = line === count - 1;
+      let content;
+      if (last && length < remaining.length) {
+        while (length > 0 && measure(remaining.slice(0, length).join('').trimEnd() + '…') > width) length--;
+        content = measure('…') <= width ? remaining.slice(0, length).join('').trimEnd() + '…' : '';
+      } else {
+        // Prefer whole words, but break a long unspaced word when necessary.
+        if (length < remaining.length && remaining[length] !== ' ') {
+          const space = remaining.slice(0, length).lastIndexOf(' ');
+          if (space > 0) length = space;
+        }
+        content = remaining.slice(0, length).join('').trimEnd();
+      }
+      lines.push({ content, offset });
+      remaining = remaining.slice(length);
+      while (remaining[0] === ' ') remaining.shift();
+    }
+    chosen = lines;
+    if (!remaining.length) break;
+  }
+  label.replaceChildren();
+  const title = document.createElementNS(ns, 'title'); title.textContent = text;
+  label.append(title);
+  chosen.forEach(({ content, offset }) => {
+    const line = document.createElementNS(ns, 'tspan');
+    line.setAttribute('x', x); line.setAttribute('y', y + offset);
+    line.textContent = content; label.append(line);
+  });
+}
+
 function renderWheel() {
   const state = distribution();
   const filled = options.filter(option => option.text.trim());
@@ -138,6 +190,7 @@ function renderWheel() {
     return [200 + Math.cos(radians) * radius, 200 + Math.sin(radians) * radius];
   };
   const svg = svgElement('svg'); svg.setAttribute('viewBox', '0 0 400 400');
+  wheel.append(svg);
   slices.forEach(({ option, percent, index, start, size, center }) => {
     let wedge;
     if (size >= 359.999999) {
@@ -158,17 +211,9 @@ function renderWheel() {
     label.setAttribute('x', x); label.setAttribute('y', y);
     label.setAttribute('text-anchor', 'middle'); label.setAttribute('dominant-baseline', 'middle');
     label.setAttribute('transform', `rotate(${center} ${x} ${y})`);
-    const text = option.text.trim();
-    label.textContent = text.length > 23 ? `${text.slice(0, 21)}…` : text;
-    // Keep narrow slices from spilling labels into their neighbours.
-    const width = Math.min(170, 2 * 126 * Math.sin(Math.min(size, 180) * Math.PI / 360) * 0.8);
-    if (width < label.textContent.length * 7) {
-      label.setAttribute('textLength', Math.max(1, width));
-      label.setAttribute('lengthAdjust', 'spacingAndGlyphs');
-    }
     svg.append(label);
+    wrapWheelLabel(label, option.text.trim(), size, x, y);
   });
-  wheel.append(svg);
 }
 
 addButton.addEventListener('click', () => {
